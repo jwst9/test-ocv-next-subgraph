@@ -6,6 +6,10 @@ export default withAuth(
     const authenticated = request.nextauth?.token
     const pathname = request.nextUrl?.pathname
 
+    if (pathname.startsWith("/api/trpc")) {
+      return NextResponse.next()
+    }
+
     if (["/signin", "/signup"].includes(pathname)) {
       if (authenticated) {
         return NextResponse.redirect(new URL("/", request.nextUrl.origin))
